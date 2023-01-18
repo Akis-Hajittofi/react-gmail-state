@@ -1,12 +1,16 @@
-import Header from './components/header'
+import { useState } from "react";
+import Header from "./components/header";
 
-import initialEmails from './data/emails'
+import initialEmails from "./data/emails";
 
-import './styles/app.css'
+import "./styles/app.css";
 
 function App() {
   // Use initialEmails for state
-  console.log(initialEmails)
+  console.log(initialEmails);
+  const [emails, setEmails] = useState(initialEmails);
+
+  // const renderInitialEmails = emails;
 
   return (
     <div className="app">
@@ -29,7 +33,7 @@ function App() {
           </li>
 
           <li className="item toggle">
-            <label for="hide-read">Hide read</label>
+            <label htmlFor="hide-read">Hide read</label>
             <input
               id="hide-read"
               type="checkbox"
@@ -39,9 +43,28 @@ function App() {
           </li>
         </ul>
       </nav>
-      <main className="emails">{/* Render a list of emails here */}</main>
+      <main className="emails">
+        {emails.map((email) => (
+          <li className="email">
+            <div className="select">
+              <input
+                className="select-checkbox"
+                type="checkbox"
+                onChange={() => {
+                  console.log("checkbox onChange");
+                }}
+              />
+            </div>
+            <div className="star">
+              <input className="star-checkbox" type="checkbox" />
+            </div>
+            <div className="sender">{email.sender}</div>
+            <div className="title">{email.title}</div>
+          </li>
+        ))}
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
